@@ -1,13 +1,16 @@
 import React from 'react';
-import { Container, Button } from 'react-bootstrap';
-
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Login from './pages/login';
 
 function App() {
   return (
-    <Container>
-      <h1>Bienvenido a CINEMATIC</h1>
-      <Button variant="primary">Reservar</Button>
-    </Container>
+    <Router>
+      <div>
+        <Routes>
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
