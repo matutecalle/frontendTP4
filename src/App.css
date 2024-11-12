@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+
+.fondo{
+  background-color: #282c34;
+  min-height: 100vh;
+  margin: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.texto {
+  color:aliceblue
+}

@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { AppContext } from '../context/AppContext'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
+import '../App.css';
 
 export function LoginForm() {
     const { loginUser, user } = useContext(AppContext);  // Accede al contexto de autenticación
@@ -47,12 +48,12 @@ export function LoginForm() {
     };
 
     return (
-        <div className="container mt-5" style={{ maxWidth: "400px" }}>
+        <div className="container pt-5" style={{ maxWidth: "400px" }}>
                 <div>
-                    <h2 className="text-center mb-4">Iniciar Sesión</h2>
+                    <h2 className="text-center mb-4 texto">Iniciar Sesión</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
-                            <label className="form-label">Correo:</label>
+                            <label className="form-label texto">Correo:</label>
                             <input
                                 type="email"
                                 name="email"
@@ -63,7 +64,7 @@ export function LoginForm() {
                             />
                         </div>
                         <div className="mb-3">
-                            <label className="form-label">Contraseña:</label>
+                            <label className="form-label texto">Contraseña:</label>
                             <input
                                 type="password"
                                 name="password"

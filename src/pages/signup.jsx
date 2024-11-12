@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../App.css'
 
 export function RegisterForm () {
   const [formData, setFormData] = useState({
@@ -42,11 +43,11 @@ export function RegisterForm () {
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="text-center">Crear Usuario</h2>
+    <div className="container pt-5">
+      <h2 className="text-center texto">Crear Usuario</h2>
       <form onSubmit={handleSubmit} className="mx-auto" style={{ maxWidth: '400px' }}>
         <div className="mb-3">
-          <label className="form-label">Nombre:</label>
+          <label className="form-label texto">Nombre:</label>
           <input
             type="text"
             name="name"
@@ -56,7 +57,7 @@ export function RegisterForm () {
             required
           />
         </div>
-        <div className="mb-3">
+        <div className="mb-3 texto">
           <label className="form-label">Email:</label>
           <input
             type="email"
@@ -68,7 +69,7 @@ export function RegisterForm () {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Contraseña:</label>
+          <label className="form-label texto">Contraseña:</label>
           <input
             type="password"
             name="password"
