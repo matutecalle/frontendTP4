@@ -1,12 +1,14 @@
 import React, { useState, useContext } from 'react';
 import { AppContext } from '../context/AppContext'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 
 export function LoginForm() {
     const { loginUser, user } = useContext(AppContext);  // Accede al contexto de autenticación
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -20,7 +22,7 @@ export function LoginForm() {
 
         try {
             // Enviar datos de login a la API
-            const loginResponse = await fetch("http://localhost:8000/api/users", {
+            const loginResponse = await fetch("http://localhost:8000/api/users/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -31,7 +33,8 @@ export function LoginForm() {
             const loginResult = await loginResponse.json();
 
             if (loginResponse.ok) {
-                loginUser(loginResult.user);  // Guardar el usuario en el contexto
+                loginUser(loginResult.user);
+                navigate('/')  // Guardar el usuario en el contexto
             } else {
                 setErrorMessage(loginResult.message || "Error en el inicio de sesión.");
             }
@@ -45,19 +48,6 @@ export function LoginForm() {
 
     return (
         <div className="container mt-5" style={{ maxWidth: "400px" }}>
-            {user ? (
-                <div className="text-center">
-                    <h3>Bienvenido, {user.name}</h3>
-                    <button
-                        className="btn btn-secondary mt-3"
-                        onClick={() => {
-                            loginUser(null);  // Limpiar el usuario al hacer logout
-                        }}
-                    >
-                        Cerrar Sesión
-                    </button>
-                </div>
-            ) : (
                 <div>
                     <h2 className="text-center mb-4">Iniciar Sesión</h2>
                     <form onSubmit={handleSubmit}>
@@ -87,9 +77,11 @@ export function LoginForm() {
                         <button type="submit" className="btn btn-primary w-100" disabled={isLoading}>
                             {isLoading ? "Cargando..." : "Iniciar Sesión"}
                         </button>
+                        <button className="btn btn-success w-100 mt-2" onClick={()=>{navigate('/Registrar')}}>
+                            Regístrate Aquí
+                        </button>
                     </form>
                 </div>
-            )}
         </div>
     );
 }
