@@ -7,6 +7,7 @@ export const AppContext = createContext();
 export const AppProvider = ({ children }) => {
     // 3. Define el estado global
     const [user, setUser] = useState(null); // Ejemplo de estado para datos del usuario
+    const [movies, setMovies] = useState([]); 
     const [reservations, setReservations] = useState([]); // Ejemplo de estado para reservas
 
     // 4. Define funciones que manejen el estado global
@@ -46,7 +47,9 @@ export const AppProvider = ({ children }) => {
                 reservations,
                 addReservation,
                 removeReservation,
-                fetchReservations
+                fetchReservations,
+                movies,
+                setMovies
             }}
         >
             {children}

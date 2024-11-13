@@ -49,3 +49,7 @@
 .texto {
   color:aliceblue
 }
+
+.nombre{
+  text-transform: capitalize;
+}
