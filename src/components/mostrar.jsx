@@ -1,8 +1,15 @@
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
 
 export function MovieCard({ movie, error}) {
   const navigate = useNavigate();
-  
+  const { selectMovie } = useContext(AppContext);
+
+  const handleSelectedMovie = () =>{
+    selectMovie(movie);
+    navigate('/Pelicula');
+  };
 
   return (
     <div className="card mb-3" style={{ minWidth: '900px' }}>
@@ -23,7 +30,7 @@ export function MovieCard({ movie, error}) {
         </div>
         <div className="col-md-3">
           <div className="card-body">
-            <button className='btn btn-dark' onClick={() => { navigate('/Pelicula') }}>Reserva tu lugar</button>
+            <button className='btn btn-dark' onClick= { handleSelectedMovie }>Reserva tu lugar</button>
           </div>
         </div>
       </div>

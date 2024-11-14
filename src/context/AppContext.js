@@ -9,6 +9,7 @@ export const AppProvider = ({ children }) => {
     const [user, setUser] = useState(null); // Ejemplo de estado para datos del usuario
     const [movies, setMovies] = useState([]); 
     const [reservations, setReservations] = useState([]); // Ejemplo de estado para reservas
+    const [selectedMovie, setSelectedMovie] = useState(null);
 
     // 4. Define funciones que manejen el estado global
     const loginUser = (userData) => {
@@ -37,6 +38,10 @@ export const AppProvider = ({ children }) => {
         }
     };
     
+    const selectMovie = (movie) => {
+        setSelectedMovie(movie)
+    }
+
     // 5. Proveer el estado y funciones a los componentes hijos
     return (
         <AppContext.Provider
@@ -49,7 +54,9 @@ export const AppProvider = ({ children }) => {
                 removeReservation,
                 fetchReservations,
                 movies,
-                setMovies
+                setMovies,
+                selectMovie,
+                selectedMovie,
             }}
         >
             {children}
