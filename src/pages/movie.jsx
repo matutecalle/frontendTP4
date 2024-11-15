@@ -1,10 +1,11 @@
 import '../App.css'
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext'; 
+import { Horarios } from '../components/horarios';
 
 
 export function PagPelicula(){
-    const { selectedMovie, addReservation, user } = useContext(AppContext); 
+    const { selectedMovie/*, addReservation, user*/ } = useContext(AppContext); 
     const [movieAuthor, setMovieAuthor] = useState(null)
     const [movieCategory, setMovieCategory] = useState(null)
     const [errorMessage, setErrorMessage] = useState('');
@@ -14,7 +15,7 @@ export function PagPelicula(){
     }*/
 
     useEffect(() =>{
-        console.log(selectedMovie.idAutor);
+        console.log(selectedMovie?.idAutor);
         if (selectedMovie){
             const fetchAuthor = async () =>{
                 try{
@@ -60,7 +61,7 @@ export function PagPelicula(){
             
         }
     },[selectedMovie]);
-
+    console.log("el id de la pelicula es:",selectedMovie.id);
     return(
         <div>
             <h1 className='texto' >{selectedMovie?.nombre}</h1>
@@ -70,15 +71,17 @@ export function PagPelicula(){
             alt={selectedMovie?.nombre}
             //className="card-img"
             style={{ height: '200px', objectFit: 'cover' }}
-          />
-          <p className='texto'>Duracion: {selectedMovie?.duracion}</p>
-          <p className='texto'>Categoria: {movieCategory?.name}</p>
-          <p className='texto'>Sinopsis: {selectedMovie?.sinopsis}</p>
-          <h3 className='texto'>Horarios</h3>
-          <div className="card-body">
-            <button className='btn btn-dark'/* onClick= { handleReserva }*/>Reservar lugares</button>
-          </div>
-
+            />
+            <p className='texto'>Duracion: {selectedMovie?.duracion}</p>
+            <p className='texto'>Categoria: {movieCategory?.name}</p>
+            <p className='texto'>Sinopsis: {selectedMovie?.sinopsis}</p>
+            <h3 className='texto'>Horarios</h3>
+            <div className='row justify-content-center'>    
+                
+                    <Horarios movie={selectedMovie} movieId={selectedMovie?.id}/>
+            </div>
+          
+          
         </div>
 
     )

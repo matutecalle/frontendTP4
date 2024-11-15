@@ -53,3 +53,54 @@
 .nombre{
   text-transform: capitalize;
 }
+
+/* Fondo borroso para el modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+/* Contenido del modal */
+.modal-content {
+  background-color: #fff;
+  /*padding: 20px;
+  
+  width: 10px;
+  
+  margin: 20px;*/
+}
+
+/* Botón de cerrar dentro del modal */
+.close-button {
+  margin-top: 15px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+/* Botones de horarios */
+.horario-button {
+  padding: 10px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.container{
+    border: 1px solid #ddd;
+    border-radius:  8px;
+    margin-bottom: 16px;
+    padding: 30px;
+}
+.mini-container{
+  margin: 20px;
+  text-align: center;
+  border-radius: 8px;
+}
