@@ -77,7 +77,6 @@ export function PagPelicula(){
             <p className='texto'>Sinopsis: {selectedMovie?.sinopsis}</p>
             <h3 className='texto'>Horarios</h3>
             <div className='row justify-content-center'>    
-                
                     <Horarios movie={selectedMovie} movieId={selectedMovie?.id}/>
             </div>
           

@@ -4,14 +4,12 @@ import Reservar from './Reservar';
 
 export function Horarios({movie, movieId}){
     
-    const[horarios,setHorarios]= useState([]);
+    const [horarios,setHorarios]= useState([]);
     const [errorMessage, setErrorMessage] = useState('');
     const [horariosAgrupados, setHorariosAgrupados] = useState([]);
     const [isModalOpen, setModalOpen] = useState(false);
     const [selectedHorario, setSelectedHorario] = useState(null);
-
-    
-
+ 
     useEffect(() => {
         console.log("el id recibido a horarios es:", movieId);
         if (movieId){
@@ -42,7 +40,7 @@ export function Horarios({movie, movieId}){
             if (horarios && horarios.length > 0) {
                 agruparHorariosPorDia(horarios);
             }
-        }, [horarios]);
+            }, [horarios]);
 
     const agruparHorariosPorDia = (horarios) => {
         const grupos = horarios.reduce((acc, horario) => {
