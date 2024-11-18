@@ -53,44 +53,80 @@ export function Reservas (){
         return Object.entries(grupos);
     };
 
+    const eliminarReserva = (reserva) => {
+        const fetchEliminarReserva = async () =>{
+            try{
+                const response = await fetch(`http://localhost:8000/api/reservations/${user.id}/${reserva.Horario.id}`,{
+                    method:"DELETE",
+                });
+                if (response.ok) {
+                    setHorariosAgrupados(prevHorarios => {
+                        return prevHorarios.map(([fecha, reservasDelDia]) => {
+                            if (reservasDelDia.some(r => r.id === reserva.id)) {
+                                // filtramos la reserva eliminada
+                                const nuevasReservas = reservasDelDia.filter(r => r.id !== reserva.id);
+                                return nuevasReservas.length > 0 ?  [fecha, nuevasReservas] : null;
+                            }
+                            return [fecha, reservasDelDia];
+                        })
+                        .filter(item => item !== null); // filtra fechas sin reservas;
+                    });
+                    alert('Reserva eliminada con éxito');
+                } else {
+                    alert('Error al eliminar la reserva');
+                }
+            }catch (error) {
+                    console.error('Error al eliminar la reserva:', error);
+                    alert('Hubo un problema al eliminar la reserva');
+            }
+    }
+    fetchEliminarReserva();
+};
+
     return(
-        <div className="texto">
-            <h1 >Tus Reservas</h1>
+        <div className="texto container">
+            <h1 className="mb-4">Tus Reservas</h1>
             <div>
                 {horariosAgrupados.map(([fecha, reservas]) => (
-                    <div key={fecha}>
-                        
-                        <div className= "fecha card mb-3" style={{ minWidth: '900px' }}>
-                            {(() => {
-                                    const [year, month, day] = fecha.split('-'); // Desglosar fecha en partes
-                                    const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']; // Meses abreviados
-                                    const mes = meses[parseInt(month, 10) - 1]; // Convertir el número de mes a nombre
-                                    const fechaFormateada = `${day} ${mes} ${year}`; // Formato personalizado
-                                    return fechaFormateada;
-                                })()}
-                        </div> {/*eliminar este div*/}
-                        <ul>
-                            {reservas.map(reserva => (
-                                <li key= {reserva.id}>
-                                    <p>Pelicula: {reserva.Horario.Movie.nombre}</p>
-                                    <img
-                                        src={reserva.Horario.Movie.imgMovie}
-                                        alt={reserva.Horario.Movie.nombre}
-                                        className="card-img"
-                                        style={{ height: '50px', objectFit: 'cover' }}
-                                    />
-                                    <p>Hora: {reserva.Horario.fecha.split('T')[1].slice(0,5)}</p>
-                                    <p>Cantidad: {reserva.cantidad}</p>
-                                </li>
+                    <div key={fecha} className="mb-5">
+                        <div className="card p-3 mb-3">
+                            <h5 className="card-title">{
+                                (() => {
+                                    const [year, month, day] = fecha.split('-');
+                                    const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+                                    const mes = meses[parseInt(month, 10) - 1];
+                                    return `${day} ${mes} ${year}`;
+                                })()
+                            }</h5>
+                        </div>
+                        <div className="row">
+                            {reservas.map((reserva, index) => (
+                                <div key={reserva.id} className="col-md-4 mb-4">
+                                    <div className="card h-100">
+                                        <img
+                                            src={reserva.Horario.Movie.imgMovie}
+                                            alt={reserva.Horario.Movie.nombre}
+                                            className="card-img-top"
+                                            style={{ height: '200px', objectFit: 'cover' }}
+                                        />
+                                        <div className="card-body">
+                                            <h5 className="card-title">{reserva.Horario.Movie.nombre}</h5>
+                                            <p className="card-text">Cantidad asientos: {reserva.cantidad}</p>
+                                            <p className="card-text">Hora: {reserva.Horario.fecha.split('T')[1].slice(0,5)}</p>
+                                        </div>
+                                        <div className="card-footer text-center">
+                                            <button 
+                                                className="btn btn-danger"
+                                                onClick={() => eliminarReserva(reserva)}>                                                    Eliminar reserva
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             ))}
-                        </ul>
-                        {/*</div>*/}
+                        </div>
                     </div>
                 ))}
             </div>
-      
-
         </div>
-
-    )
-}
+    );
+};

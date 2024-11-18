@@ -2,6 +2,7 @@ import '../App.css'
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext'; 
 import { Horarios } from '../components/horarios';
+import { Container, Row, Col } from 'react-bootstrap';
 
 
 export function PagPelicula(){
@@ -63,28 +64,37 @@ export function PagPelicula(){
     },[selectedMovie]);
     console.log("el id de la pelicula es:",selectedMovie.id);
     return(
-        <div>
-            <h1 className='texto' >{selectedMovie?.nombre}</h1>
-            <p className='texto'>Autor: {movieAuthor?.nombre}</p>
-            <img
-            src={selectedMovie?.imgMovie}
-            alt={selectedMovie?.nombre}
-            //className="card-img"
-            style={{ height: '200px', objectFit: 'cover' }}
-            />
-            <p className='texto'>Duracion: {selectedMovie?.duracion}</p>
-            <p className='texto'>Categoria: {movieCategory?.name}</p>
-            <p className='texto'>Sinopsis: {selectedMovie?.sinopsis}</p>
-            <h3 className='texto'>Horarios</h3>
-            <div className='row justify-content-center'>    
-                    <Horarios movie={selectedMovie} movieId={selectedMovie?.id}/>
-            </div>
+        
+            <Container>
+                <Row>
+                    <h1 className='texto mb-4 centrar' >{selectedMovie?.nombre}</h1>
+                </Row>
+                <Row>
+                    <Col md={3} className='d-flex justify-content-center align-items-center'>
+                        <img
+                        src={selectedMovie?.imgMovie}
+                        alt={selectedMovie?.nombre}
+                        //className="card-img"
+                        style={{ height: '200px', objectFit: 'cover' }}
+                        className='img.fluid'
+                        />
+                    </Col>
+                    <Col md={9}> 
+                        <p className='texto'>Duracion: {selectedMovie?.duracion}</p>
+                        <p className='texto'>Categoria: {movieCategory?.name}</p>
+                        <p className='texto'>Director: {movieAuthor?.nombre}</p>
+                        <p className='texto'>Sinopsis: {selectedMovie?.sinopsis}</p>
+                    </Col>
+                </Row>
+                <Row>
+                    <h3 className='texto centrar'>Horarios</h3>
+                    <div className='row justify-content-center'>    
+                            <Horarios movie={selectedMovie} movieId={selectedMovie?.id}/>
+                    </div>
+                </Row>
           
-          
-        </div>
+            </Container>
+        
 
     )
-
-
-
-}
+};

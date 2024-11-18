@@ -6,6 +6,7 @@ import RegisterForm from './pages/signup';
 import { Principal } from './pages/home';
 import { PagPelicula } from './pages/movie';
 import { Reservas } from './pages/reservas';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Reservar from './Reservar';
+import { Col, Row, Container} from 'react-bootstrap';
 
 
 export function Horarios({movie, movieId}){
@@ -69,44 +70,66 @@ export function Horarios({movie, movieId}){
     };
 
     return (
-        <div>
-            {horariosAgrupados.length > 0 ? (
-                horariosAgrupados.map(([fecha, horariosDelDia]) => (
-                    <div key={fecha} style={styles.diaContainer}>
-                        {/* Mostrar la fecha solo una vez por día */}
-                        <div style={styles.fecha}>
-                            {(() => {
-                                const [year, month, day] = fecha.split('-'); // Desglosar fecha en partes
-                                const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']; // Meses abreviados
-                                const mes = meses[parseInt(month, 10) - 1]; // Convertir el número de mes a nombre
-                                const fechaFormateada = `${day} ${mes} ${year}`; // Formato personalizado
-                                return fechaFormateada;
-                            })()}
-                        </div>
-                        <div  style={styles.horarios}>
-                            {/* Mostrar los horarios dentro del mismo recuadro de la fecha */}
-                            {horariosDelDia.map((horario) => (
-                                <button
-                                    key={horario.id} 
-                                    style={styles.horario}
-                                    onClick={()=> manejarReserva(horario)} 
-                                    className='horario-button'
-                                    >
-                                    
-                                    {horario.fecha.split('T')[1].slice(0, 5)} {/* Muestra solo hora:minutos */}
-                                </button>
-                            ))}
-                             {isModalOpen && (
-                            <Reservar horario={selectedHorario} onClose={cerrarModal} movie={movie}/>
-                            )}
-                        </div>
-                    </div>
-                ))
-            ) : (
-                <p className='texto'>No hay horarios disponibles.</p>
+        <Container>
+            <Row>
+                {horariosAgrupados.length > 0 ? (
+                    horariosAgrupados.map(([fecha, horariosDelDia]) => (
+                        <Col md={6} key={fecha} className="mb-4">   
+                            <div style={styles.diaContainer}>
+                                {/* Mostrar la fecha solo una vez por día */}
+                                <div style={styles.fecha}>
+                                    {(() => {
+                                        const [year, month, day] = fecha.split('-'); // Desglosar fecha en partes
+                                        const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']; // Meses abreviados
+                                        const mes = meses[parseInt(month, 10) - 1]; // Convertir el número de mes a nombre
+                                        return `${day} ${mes} ${year}`; // Formato personalizado
+                                    })()}
+                                </div>
+    
+                                {/* Mostrar los horarios dentro de 3 columnas */}
+                                <Row>
+                                    {horariosDelDia.map((horario, index) => {
+                                        // Agrupar los horarios en 3 columnas
+                                        if (index % 3 === 0 && index !== 0) {
+                                            return (
+                                                <Col key={horario.id} md={4} className="mb-2">
+                                                    <button
+                                                        style={styles.horario}
+                                                        onClick={() => manejarReserva(horario)}
+                                                        className="horario-button"
+                                                    >
+                                                        {horario.fecha.split('T')[1].slice(0, 5)} {/* Muestra solo hora:minutos */}
+                                                    </button>
+                                                </Col>
+                                            );
+                                        }
+                                        return (
+                                            <Col key={horario.id} md={4} className="mb-2">
+                                                <button
+                                                    style={styles.horario}
+                                                    onClick={() => manejarReserva(horario)}
+                                                    className="horario-button"
+                                                >
+                                                    {horario.fecha.split('T')[1].slice(0, 5)} {/* Muestra solo hora:minutos */}
+                                                </button>
+                                            </Col>
+                                        );
+                                    })}
+                                </Row>
+                            </div> 
+                        </Col>
+                    ))
+                ) : (
+                    <p className="texto">No hay horarios disponibles.</p>
+                )}
+            </Row>
+    
+            {isModalOpen && (
+                <Reservar horario={selectedHorario} onClose={cerrarModal} movie={movie} />
             )}
-        </div>
+        </Container>
     );
+    
 };
 
 const styles = {

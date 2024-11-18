@@ -4,7 +4,7 @@ import { useState, useContext } from 'react';
 import '../App.css';
 
 export function Reservar ({horario, onClose, movie}){ /*borrar luego movie como parametro*/
-    const { addReservations , user} = useContext(AppContext); 
+    const { /*addReservations,*/  user} = useContext(AppContext); 
     const [cantidad, setCantidad] = useState('');
     const [status, setStatus] = useState('');
     const[successMessage, setSuccessMessage] = useState('');
@@ -35,8 +35,8 @@ export function Reservar ({horario, onClose, movie}){ /*borrar luego movie como 
                     });
                     const reservaExistente = await reservaYaExiste.json();
                     console.log("reserva encontrada:", reservaExistente);
-                    if (reservaExistente){//verifico si ya existe reserva de ese horario
-
+                    if (reservaYaExiste.status === 200) {//if (reservaExistente){//verifico si ya existe reserva de ese horario
+                        console.log("entró al if");
                         const cantidadActualizada = reservaExistente.cantidad + cantidadNumero
                         const actualizarCantidad =  await fetch(`http://localhost:8000/api/reservations/${user.id}/${reservaExistente.idHorario}`,
                             {
@@ -89,17 +89,10 @@ export function Reservar ({horario, onClose, movie}){ /*borrar luego movie como 
                     console.error("Error en la solicitud:", error);
                     setStatus("Error de red al crear la reserva");
                 }
-
-
-                ////////////////////////////////
-               
             }else{
                 alert("Verifique que haya ingresado con un usuario, que haya seleccionado un horario y una cantidad correcta")
             }
         }
-
-
-        
     };
 
     return (
